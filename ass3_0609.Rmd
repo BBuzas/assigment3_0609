@@ -9,10 +9,66 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
+library(psych)
+install.packages("sjPlot")
+library(sjPlot)
+library(broom)
 ```
 
 ```{r}
 # Read data.
 assignment3 <- read_excel("assignment_3_dataset.xlsx")
+```
+
+```{r}
+## Data and model diagnostics 
+### Data diagnostics
+#### Descriptives of the variables
+str(assignment3)
+summary(assignment3)
+desc <- describe(assignment3)
+# Plots
+ggplot(assignment3, aes(x = age)) +
+  geom_histogram()
+ggplot(assignment3, aes(x = STAI_trait)) +
+  geom_histogram()
+ggplot(assignment3, aes(x = pain_cat)) +
+  geom_histogram()
+ggplot(assignment3, aes(x = cortisol_serum)) +
+  geom_histogram()
+ggplot(assignment3, aes(x = cortisol_saliva)) +
+  geom_histogram()
+ggplot(assignment3, aes(x = mindfulness)) +
+  geom_histogram()
+```
+
+```{r}
+### Model diagnostics
+#### Build the more complex model
+
+complex_model <- 
+  glm(pain ~ age + sex + STAI_trait + pain_cat + mindfulness + cortisol_serum + cortisol_saliva,
+      data = assignment3,
+      family = "gaussian")
+
+summary(complex_model)
+
+tidy_complex_model <- tidy(complex_model, conf.int = TRUE, exponentiate = TRUE)
+
+# tab_model(complex_model, 
+#          show.aic = TRUE,
+#          show.loglik = TRUE, 
+#          string.ci = "95% CI", 
+#          show.stat = TRUE,
+#          robust = TRUE,
+#          dv.labels = "Complex Model",
+#          pred.labels = c("(Intercept)",
+#                          "Age", 
+#                          "Sex", 
+#                          "STAI",
+#                          "Pain cat.",
+#                          "Mindfulness",
+#                          "Cortisol serum",
+#                          "Cortisol saliva"))
 ```
 

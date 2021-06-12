@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(readxl)
 library(psych)
-install.packages("sjPlot")
 library(sjPlot)
 library(broom)
 library(performance)
@@ -67,6 +66,5 @@ plot(cd)
 
 #Normality, linearity, homoscedasticity, multicollinearity
 check_model(complex_model)
-residuals(check_model)
 ```
 

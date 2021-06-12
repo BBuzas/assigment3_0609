@@ -1,5 +1,5 @@
 ---
-title: "assigment3_0609"
+title: "assignment3_0609"
 author: "Barnabás Buzás"
 date: '2021 06 09 '
 output: html_document
